@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:job_offers_mohammad_ali/logic/app_cubit.dart';
 import 'package:job_offers_mohammad_ali/logic/job_details_bloc/job_details_bloc.dart';
 import 'package:job_offers_mohammad_ali/logic/job_details_bloc/job_details_events.dart';
 import 'package:job_offers_mohammad_ali/logic/job_details_bloc/job_details_states.dart';
@@ -17,6 +18,7 @@ class JobDetailsScreen extends StatefulWidget {
 class _JobDetailsScreenState extends State<JobDetailsScreen> {
   late JobDetailsBloc jobDetailsBloc;
   late LocaleBloc localeBloc;
+  AppCubit appCubit = AppCubit(1);
   @override
   void initState() {
     jobDetailsBloc = BlocProvider.of<JobDetailsBloc>(context);
@@ -58,11 +60,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       child: localeBloc.locale == Locale("en_US")
                           ? Text(
                               "تقدم",
-                              style: TextStyle(color: Colors.white,fontFamily: "IBMPlexSansArabic",),
+                              style: TextStyle(color: Colors.white),
                             )
                           : Text(
                               "Apply",
-                              style: TextStyle(color: Colors.white,fontFamily: "IBMPlexSansArabic",),
+                              style: TextStyle(color: Colors.white),
                             ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(108, 47, 128, 1),
@@ -92,29 +94,23 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           ListTile(
                             title: Text(
                               state.job.data!.title!,
-                              style: TextStyle(
-                                  fontFamily: "IBMPlexSansArabic",
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             leading:
                                 Image.network(state.job.data!.company!.logo!),
                             subtitle: Text(
                               state.job.data!.company!.industry!,
-                              style: TextStyle(
-                                  fontFamily: "IBMPlexSansArabic",
-                                  fontSize: 10),
+                              style: TextStyle(fontSize: 10),
                             ),
                           ),
                           ListTile(
                             title: localeBloc.locale != Locale("en_US")
                                 ? Text(state.job.data!.vertical!.nameEn!,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "IBMPlexSansArabic"))
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold))
                                 : Text(state.job.data!.vertical!.nameAr!,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "IBMPlexSansArabic")),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -126,9 +122,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                 .nameEn! +
                                             " . " +
                                             state.job.data!.type!.nameEn!,
-                                        style: TextStyle(
-                                            fontFamily: "IBMPlexSansArabic",
-                                            fontSize: 10),
+                                        style: TextStyle(fontSize: 10),
                                       )
                                     : Text(
                                         state.job.data!.location!.nameAr! +
@@ -137,10 +131,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                 .nameAr! +
                                             " . " +
                                             state.job.data!.type!.nameAr!,
-                                        style: TextStyle(
-                                            fontFamily: "IBMPlexSansArabic",
-                                            fontSize: 10),
+                                        style: TextStyle(fontSize: 10),
                                       ),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.01,),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -157,9 +150,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       child: Text(
                                         state.job.data!.icpAnswers!.jobRole![0]
                                             .titleEn!,
-                                        style: TextStyle(
-                                            fontFamily: "IBMPlexSansArabic",
-                                            fontSize: 10),
+                                        style: TextStyle(fontSize: 10),
                                       ),
                                       padding: EdgeInsets.all(5),
                                     ),
@@ -175,9 +166,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       child: Text(
                                           state.job.data!.icpAnswers!
                                               .typesOfSales![0].titleEn!,
-                                          style: TextStyle(
-                                              fontFamily: "IBMPlexSansArabic",
-                                              fontSize: 10)),
+                                          style: TextStyle(fontSize: 10)),
                                       padding: EdgeInsets.all(5),
                                     ),
                                   ],
@@ -189,51 +178,43 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             title: localeBloc.locale != Locale("en_US")
                                 ? Text(
                                     "Description",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "IBMPlexSansArabic"),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   )
                                 : Text(
                                     "الوصف",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "IBMPlexSansArabic"),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                             subtitle: localeBloc.locale != Locale("en_US")
                                 ? Text(
                                     state.job.data!.icpAnswers!.jobRole![0]
                                         .descriptionEn!,
-                                    style: TextStyle(
-                                        fontFamily: "IBMPlexSansArabic"),
+                                    style: TextStyle(),
                                   )
                                 : Text(
                                     state.job.data!.icpAnswers!.jobRole![0]
                                         .descriptionAr!,
-                                    style: TextStyle(
-                                        fontFamily: "IBMPlexSansArabic")),
+                                    style: TextStyle()),
                           ),
                           ListTile(
                             title: localeBloc.locale != Locale("en_US")
                                 ? Text("Key Responsibilities ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "IBMPlexSansArabic"))
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold))
                                 : Text("المسؤوليات ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "IBMPlexSansArabic")),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
                             subtitle: localeBloc.locale != Locale("en_US")
                                 ? Text(
                                     state.job.data!.icpAnswers!.typesOfSales![0]
                                         .descriptionEn!,
-                                    style: TextStyle(
-                                        fontFamily: "IBMPlexSansArabic"),
+                                    style: TextStyle(),
                                   )
                                 : Text(
                                     state.job.data!.icpAnswers!.typesOfSales![0]
                                         .descriptionAr!,
-                                    style: TextStyle(
-                                        fontFamily: "IBMPlexSansArabic")),
+                                    style: TextStyle()),
                           ),
                         ],
                       ),
@@ -241,11 +222,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   } else if (state is JobDetailsErrorState) {
                     return Center(
                       child: localeBloc.locale != Locale("en_US")
-                          ? Text("something went wrong",
-                              style: TextStyle(fontFamily: "IBMPlexSansArabic"))
-                          : Text("حدث خطأ ما",
-                              style:
-                                  TextStyle(fontFamily: "IBMPlexSansArabic")),
+                          ? Text("something went wrong", style: TextStyle())
+                          : Text("حدث خطأ ما", style: TextStyle()),
                     );
                   }
                   return Container();
@@ -253,24 +231,33 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               )
             ],
           ),
-          bottomNavigationBar: BottomNavigationBar(items: [
-            BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/briefcase-01.png",
-                ),
-                label:
-                    localeBloc.locale != Locale("en_US") ? "Jobs" : "الأعمال"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined),
-                label: localeBloc.locale != Locale("en_US")
-                    ? "Resume"
-                    : "السيرة الذاتية"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
-                label: localeBloc.locale != Locale("en_US")
-                    ? "Setting"
-                    : "الإعدادات")
-          ]),
+          bottomNavigationBar: BlocBuilder<AppCubit, dynamic>(
+            bloc: appCubit,
+            builder: (context, index) => BottomNavigationBar(
+                currentIndex: index,
+                onTap: (index) {
+                  appCubit.setState(index);
+                },
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Image.asset(
+                        "assets/images/briefcase-01.png",
+                      ),
+                      label: localeBloc.locale != Locale("en_US")
+                          ? "Jobs"
+                          : "الأعمال"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.person_2_outlined),
+                      label: localeBloc.locale != Locale("en_US")
+                          ? "Resume"
+                          : "السيرة الذاتية"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.settings_outlined),
+                      label: localeBloc.locale != Locale("en_US")
+                          ? "Setting"
+                          : "الإعدادات")
+                ]),
+          ),
         ),
       ),
     );

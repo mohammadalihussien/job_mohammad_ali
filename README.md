@@ -6,7 +6,6 @@ A brief description of project, what it does, and its purpose. Including relevan
 - [Installation](#installation)
 - [Usage](#usage)
 - [apk_file](#apk)
-- [License](#license)
 
 ## Installation
 

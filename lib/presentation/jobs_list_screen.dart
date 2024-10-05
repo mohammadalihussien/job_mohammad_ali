@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:job_offers_mohammad_ali/logic/app_cubit.dart';
 import 'package:job_offers_mohammad_ali/logic/job_details_bloc/job_details_bloc.dart';
 import 'package:job_offers_mohammad_ali/logic/jobs_logic/jobs_bloc.dart';
 import 'package:job_offers_mohammad_ali/logic/jobs_logic/jobs_event.dart';
@@ -19,6 +20,8 @@ class JobsListScreen extends StatefulWidget {
 class _JobsListScreenState extends State<JobsListScreen> {
   late JobsBloc jobsBloc;
   late LocaleBloc localeBloc;
+
+  AppCubit appCubit = AppCubit(1);
   @override
   void initState() {
     jobsBloc = BlocProvider.of<JobsBloc>(context);
@@ -40,13 +43,11 @@ class _JobsListScreenState extends State<JobsListScreen> {
                 ? Text("الأعمال",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontFamily: "IBMPlexSansArabic",
                     ))
                 : Text(
                     "Jobs",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontFamily: "IBMPlexSansArabic",
                     ),
                   ),
             actions: [
@@ -58,24 +59,32 @@ class _JobsListScreenState extends State<JobsListScreen> {
                   ))
             ],
           ),
-          bottomNavigationBar: BottomNavigationBar(items: [
-            BottomNavigationBarItem(
-                icon: Image.asset(
-                  "assets/images/briefcase-01.png",
-                ),
-                label:
-                    localeBloc.locale != Locale("en_US") ? "Jobs" : "الأعمال"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined),
-                label: localeBloc.locale != Locale("en_US")
-                    ? "Resume"
-                    : "السيرة الذاتية"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
-                label: localeBloc.locale != Locale("en_US")
-                    ? "Setting"
-                    : "الإعدادات")
-          ]),
+          bottomNavigationBar: BlocBuilder<AppCubit,dynamic>(
+            bloc: appCubit,
+            builder:(context,index)=> BottomNavigationBar(
+              onTap: (index){
+                appCubit.setState(index);
+              },
+                currentIndex: index,
+                items: [
+              BottomNavigationBarItem(
+                  icon: Image.asset(
+                    "assets/images/briefcase-01.png",
+                  ),
+                  label:
+                      localeBloc.locale != Locale("en_US") ? "Jobs" : "الأعمال"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person_2_outlined),
+                  label: localeBloc.locale != Locale("en_US")
+                      ? "Resume"
+                      : "السيرة الذاتية"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings_outlined),
+                  label: localeBloc.locale != Locale("en_US")
+                      ? "Setting"
+                      : "الإعدادات")
+            ]),
+          ),
           body: BlocBuilder<JobsBloc, JobsStates>(
             builder: (context, state) {
               if (state is JobsFetchSuccess) {
@@ -111,30 +120,25 @@ class _JobsListScreenState extends State<JobsListScreen> {
                                   ? Text(
                                       state.allJobs[i].vertical!.nameAr!,
                                       style: TextStyle(
-                                          fontFamily: "IBMPlexSansArabic",
                                           fontWeight: FontWeight.bold),
                                     )
                                   : Text(state.allJobs[i].vertical!.nameEn!,
                                       style: TextStyle(
-                                          fontFamily: "IBMPlexSansArabic",
                                           fontWeight: FontWeight.bold)),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(state.allJobs[i].company!.name!,
-                                      style: TextStyle(
-                                        fontFamily: "IBMPlexSansArabic",fontSize :10
+                                      style: TextStyle(fontSize :10
                                       )),
                                   localeBloc.locale == Locale("en_US")
                                       ? Text(
                                           "${state.allJobs[i].location!.nameAr!} . ${state.allJobs[i].workplacePreference!.nameAr!}",
-                                          style: TextStyle(
-                                            fontFamily: "IBMPlexSansArabic",fontSize :10
+                                          style: TextStyle(fontSize :10
                                           ))
                                       : Text(
                                           "${state.allJobs[i].location!.nameEn!} . ${state.allJobs[i].workplacePreference!.nameEn!}",
-                                          style: TextStyle(
-                                            fontFamily: "IBMPlexSansArabic",fontSize :10
+                                          style: TextStyle(fontSize :10
                                           ))
                                 ],
                               ),
@@ -151,12 +155,11 @@ class _JobsListScreenState extends State<JobsListScreen> {
                                         ? Text(
                                             "${dateTime.difference(givenDate).inDays} دقيقة مضت",
                                             style: TextStyle(
-                                              fontFamily: "IBMPlexSansArabic",fontSize :10
+                                              fontSize :10
                                             ))
                                         : Text(
                                             "${dateTime.difference(givenDate).inDays} minutes ago",
-                                            style: TextStyle(
-                                              fontFamily: "IBMPlexSansArabic",fontSize :10
+                                            style: TextStyle(fontSize :10
                                             )))
                                 : dateTime.difference(givenDate).inHours < 24
                                     ? Align(
@@ -169,14 +172,12 @@ class _JobsListScreenState extends State<JobsListScreen> {
                                             ? Text(
                                                 "${dateTime.difference(givenDate).inDays} ساعة مضت",
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      "IBMPlexSansArabic",fontSize :10
+                                                  fontSize :10
                                                 ))
                                             : Text(
                                                 "${dateTime.difference(givenDate).inDays} hours ago",
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      "IBMPlexSansArabic",fontSize :10
+                                                  fontSize :10
                                                 )))
                                     : Align(
                                         alignment:
@@ -188,14 +189,12 @@ class _JobsListScreenState extends State<JobsListScreen> {
                                             ? Text(
                                                 "${dateTime.difference(givenDate).inDays} يوم مضى",
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      "IBMPlexSansArabic",fontSize :10
+                                                  fontSize :10
                                                 ))
                                             : Text(
                                                 "${dateTime.difference(givenDate).inDays} days ago",
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      "IBMPlexSansArabic",fontSize :10
+                                                  fontSize :10
                                                 )))
                           ]),
                         );
@@ -210,11 +209,9 @@ class _JobsListScreenState extends State<JobsListScreen> {
                   child: localeBloc.locale == Locale("en_US")
                       ? Text("حدث خطأ ما",
                           style: TextStyle(
-                            fontFamily: "IBMPlexSansArabic",
                           ))
                       : Text("something went wrong",
                           style: TextStyle(
-                            fontFamily: "IBMPlexSansArabic",
                           )),
                 );
               }

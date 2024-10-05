@@ -34,11 +34,13 @@ class _MyAppState extends State<MyApp> {
         bloc: localeBloc,
         builder: (context, state) {
           if (state is LocaleSuccess) {
+            print("local success ${state.locale}");
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               locale: state.locale,
-              title: 'Flutter Demo',
+
               theme: ThemeData(
+                fontFamily: "IBMPlexSansArabic",
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
               ),

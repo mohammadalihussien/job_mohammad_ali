@@ -11,6 +11,7 @@ class LocaleBloc extends Bloc<LocaleEvents,LocaleStates>{
     on<DetectLocale>((event,state) {
       emit(LocaleInProgress());
       locale = Get.deviceLocale!;
+      print("language is $locale");
       emit(LocaleSuccess(locale: locale));
     });
   }
