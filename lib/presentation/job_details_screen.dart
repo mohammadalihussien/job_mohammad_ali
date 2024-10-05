@@ -18,7 +18,7 @@ class JobDetailsScreen extends StatefulWidget {
 class _JobDetailsScreenState extends State<JobDetailsScreen> {
   late JobDetailsBloc jobDetailsBloc;
   late LocaleBloc localeBloc;
-  AppCubit appCubit = AppCubit(1);
+  AppCubit appCubit = AppCubit(0);
   @override
   void initState() {
     jobDetailsBloc = BlocProvider.of<JobDetailsBloc>(context);

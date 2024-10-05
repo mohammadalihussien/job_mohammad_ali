@@ -21,7 +21,7 @@ class _JobsListScreenState extends State<JobsListScreen> {
   late JobsBloc jobsBloc;
   late LocaleBloc localeBloc;
 
-  AppCubit appCubit = AppCubit(1);
+  AppCubit appCubit = AppCubit(0);
   @override
   void initState() {
     jobsBloc = BlocProvider.of<JobsBloc>(context);
