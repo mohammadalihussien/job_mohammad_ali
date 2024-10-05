@@ -68,9 +68,9 @@ class _JobsListScreenState extends State<JobsListScreen> {
                 currentIndex: index,
                 items: [
               BottomNavigationBarItem(
-                  icon: Image.asset(
+                  icon: index == 0 ? Image.asset(
                     "assets/images/briefcase-01.png",
-                  ),
+                  ):Icon(Icons.shopping_bag_outlined),
                   label:
                       localeBloc.locale != Locale("en_US") ? "Jobs" : "الأعمال"),
               BottomNavigationBarItem(

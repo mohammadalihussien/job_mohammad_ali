@@ -133,7 +133,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                             state.job.data!.type!.nameAr!,
                                         style: TextStyle(fontSize: 10),
                                       ),
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.01,
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -240,9 +243,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 },
                 items: [
                   BottomNavigationBarItem(
-                      icon: Image.asset(
-                        "assets/images/briefcase-01.png",
-                      ),
+                      icon: index == 0
+                          ? Image.asset(
+                              "assets/images/briefcase-01.png",
+                            )
+                          : Icon(Icons.shopping_bag_outlined),
                       label: localeBloc.locale != Locale("en_US")
                           ? "Jobs"
                           : "الأعمال"),
